@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "name": "boringchat",
+  "version": "1.0.0",
+  "description": "just another simple socket.io based chat app",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "app",
+    "chatapp"
+  ],
+  "author": "masterSal",
+  "license": "ISC"
+}
