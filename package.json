@@ -1,13 +1,16 @@
 {
   "dependencies": {
     "dotenv": "^9.0.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
   },
   "name": "boringchat",
   "version": "1.0.0",
   "description": "just another simple socket.io based chat app",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  },
   "scripts": {
     "start": "node app.js"
   },

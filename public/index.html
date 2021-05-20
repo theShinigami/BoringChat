@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>BoringChat</title>
+
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+
+</head>
+<body>
+
+
+<!-- connect Modal -->
+<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="connectModalLabel">Connect to server...</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="ws-label">ws://</span>
+            </div>
+            <input id="ws-url" type="text" class="form-control" placeholder="localhost:1234" aria-label="ws-placeholder" aria-describedby="ws-label">
+        </div>
+      </div>
+
+
+      <div class="modal-footer">
+        <button id="connect-ws-btn" type="button" class="btn btn-primary">connect</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- connect modal -->
+
+  <div class="container">
+
+    <div id="upper" class="row">
+
+        <div class="col">
+
+          <h3>BoringChat</h3>
+
+        </div>
+
+        <div class="col text-right" style="padding-top: 25px;">
+
+            <div id="loading_spinner" style="display: none">
+                <span>connecting...</span>
+                <div class="spinner-border spinner-border-sm text-primary" role="status"></div> 
+            </div>
+
+            <div id="connect_btn">
+                <a data-toggle="modal" data-target="#connectModal" href="#">connect</a>
+            </div>
+
+        </div>
+
+    </div> <!-- #upper .row -->
+
+    <div class="row">
+
+      <div class="col-sm-3">
+
+        <!-- <input id="username" type="text" class="form-control" placeholder="Username"> -->
+
+        <div id="user-list">
+          <div class="list-group">
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+
+        <div id="conversation">
+        </div>
+
+        <div class="row" id="sendMessageDetails">
+
+          <div class="col">
+
+            <input id="sendMessage" type="text" class="form-control" placeholder="Type your message here">
+
+          </div>
+
+          <div class="col-sm-2">
+
+            <button id="sendMessageBut" type="button" class="btn btn-primary">Send</button>
+
+          </div>
+
+        </div> <!-- .row -->
+
+      </div>
+
+    </div> <!-- .row -->
+
+  </div> <!-- .container -->
+
+  <script src="lib/jquery/jquery-3.1.1.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+
+  <script type="text/javascript">
+
+    const getRole = function() {
+      return 'agent';
+    };
+
+  </script>
+
+</body>
+
+</html>
