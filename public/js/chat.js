@@ -37,11 +37,11 @@ $(document).ready(function() {
     $wsURL = $('#ws-url');
 
 
-    $sendMessage.keypress(function( event ) {
-        if ( event.which === 13 ) {
-            console.info( "You've pressed enter..." );
-        }
-    });
+    // $sendMessage.keypress(function( event ) {
+    //     if ( event.which === 13 ) {
+    //         console.info( "You've pressed enter..." );
+    //     }
+    // });
 
 
     // ws connect handle click
