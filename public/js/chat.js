@@ -23,25 +23,57 @@ const connectWS = function( url ) {
 
 }
 
+
+// handle chat bubble
+const chatBubbleHandler = function() {
+
+    // initialize by constructing a named function...
+    var $chatWindow = new Bubbles(
+
+        document.getElementById("chat"), // ...passing HTML container element...
+        "$chatWindow", // ...and name of the function as a parameter
+        {
+            inputCallbackFn: function (chatObject) {
+
+            console.log( chatObject );
+
+            }
+        }
+        
+    );
+  
+    // `.talk()` will get your bot to begin the conversation
+    $chatWindow.talk(
+        // pass your JSON/JavaScript object to `.talk()` function where
+        // you define how the conversation between the bot and user will go
+        {
+        // "ice" (as in "breaking the ice") is a required conversation object
+        // that maps the first thing the bot will say to the user
+        ice: {
+            // "says" defines an array of sequential bubbles
+            // that the bot will produce
+            says: ["Hey!"]
+        }, // end required "ice" conversation object
+    
+        } // end conversation object
+    );
+
+}
+
+
+
+
 $(document).ready(function() {
 
     
     $conversation = $('#conversation');
     $sendMessage = $('#sendMessage');
 
-
     // btns...
     $connectWSBtn = $('#connect-ws-btn');
 
     // inputs
     $wsURL = $('#ws-url');
-
-
-    // $sendMessage.keypress(function( event ) {
-    //     if ( event.which === 13 ) {
-    //         console.info( "You've pressed enter..." );
-    //     }
-    // });
 
 
     // ws connect handle click
@@ -54,6 +86,10 @@ $(document).ready(function() {
 
     });
 
+
+    
+
+    chatBubbleHandler();
 
     handleWindowResize();
 
