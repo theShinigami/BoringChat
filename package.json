@@ -2,6 +2,7 @@
   "dependencies": {
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "random-animal-name-generator": "^0.1.1",
     "socket.io": "^4.1.2"
   },
   "name": "boringchat",

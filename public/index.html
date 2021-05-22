@@ -8,7 +8,6 @@
   <title>BoringChat</title>
 
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="lib/font-awesome.min.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
 
   <!-- Chat bubble -->
@@ -41,12 +40,28 @@
 
 
       <div class="modal-body">
+
         <div class="input-group mb-3">
+          
             <div class="input-group-prepend">
                 <span class="input-group-text" id="ws-label">ws://</span>
             </div>
             <input id="ws-url" type="text" class="form-control" placeholder="localhost:1234" aria-label="ws-placeholder" aria-describedby="ws-label">
+                  
         </div>
+
+        <a href="#" id="generateUsername">generate</a>
+        <div class="input-group mb-3">
+          
+          <div class="input-group-prepend">
+              <span class="input-group-text" id="username-label">@</span>
+          </div>
+          <input id="input-username" type="text" class="form-control" placeholder="username" aria-label="username-placeholder" aria-describedby="username-label">
+
+
+        </div>
+
+
       </div>
 
 
@@ -112,10 +127,10 @@
           </div>
 
           
-          <div class="col-sm-1">
+          <div class="col-sm-2">
 
             <button id="sendMessageBut" type="button" class="btn btn-primary">
-              <i class="fa fa-send-o"></i>
+              Send
             </button>
 
           </div> 

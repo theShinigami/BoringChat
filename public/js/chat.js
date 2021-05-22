@@ -60,6 +60,30 @@ const chatBubbleHandler = function() {
 
 }
 
+// generate username handler
+const generateUsernameHandler = function() {
+
+    $generateGenerateUsername = $( "#generateUsername" );
+    $usernameInput = $( "#input-username" );
+
+    $generateGenerateUsername.click( function() {
+
+        // fetch random animal username
+        fetch('http://localhost:4000/user/generateUsername')
+            .then(response => response.json())
+            .then(data => {
+                
+                // update the username input with new fetched
+                // username
+                $usernameInput.val( data["username"] );
+
+            });
+
+    });
+
+
+}
+
 
 
 
@@ -90,6 +114,8 @@ $(document).ready(function() {
     
 
     chatBubbleHandler();
+
+    generateUsernameHandler();
 
     handleWindowResize();
 
