@@ -24,6 +24,52 @@ const connectWS = function( url ) {
 }
 
 
+// generates random color hex value
+const genRandomColor = function() {
+
+    let color = "";
+    var letters = 'abcdef0123456789';
+
+    for (var i=0; i<6; i++) color += letters[Math.floor(Math.random() * 16)];
+
+    return color;
+
+}
+
+
+// add new user to user list body
+const addUserToListBody = function( username, message ) {
+
+    var userListBody = $('#user-list-body');
+
+    userListBody.append( $((`
+
+        <a href="#" class="list-group-item" id="${username}">
+            <div class="media">
+                <div class="circle" style="background-color: #${genRandomColor()}">
+                    <span class="initials">${username[0].toUpperCase()}</span>
+                </div>
+                <div class="media-body">
+                    <p class="media-heading">${username}</p>
+                    <small>${message}</p>
+                </div>
+            </div>
+        </a>
+
+    `)) );
+
+
+};
+
+
+// remove the user from the list
+const removeUserFromList = function( username ) {
+
+    $(`#${username}`).remove();
+
+}
+
+
 // handle chat bubble
 const chatBubbleHandler = function() {
 
@@ -112,6 +158,8 @@ $(document).ready(function() {
 
 
     
+
+    addUserToListBody( 'myUsername', "This is just a demo message" );
 
     chatBubbleHandler();
 
