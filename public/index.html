@@ -38,38 +38,46 @@
         </button>
       </div>
 
+      <form id="ws-connect-form">
 
-      <div class="modal-body">
+        <div class="modal-body">
 
-        <div class="input-group mb-3">
-          
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="ws-label">ws://</span>
-            </div>
-            <input id="ws-url" type="text" class="form-control" placeholder="localhost:1234" aria-label="ws-placeholder" aria-describedby="ws-label">
-                  
-        </div>
-
-        <a href="#" id="generateUsername">generate</a>
-        <div class="input-group mb-3">
-          
-          <div class="input-group-prepend">
-              <span class="input-group-text" id="username-label">@</span>
+          <div class="input-group mb-3">
+            
+              <div class="input-group-prepend">
+                  <span class="input-group-text" id="ws-label">ws://</span>
+              </div>
+              <input required="true" id="ws-url" type="text" class="form-control" placeholder="localhost:1234" aria-label="ws-placeholder" aria-describedby="ws-label">
+                    
           </div>
-          <input id="input-username" type="text" class="form-control" placeholder="username" aria-label="username-placeholder" aria-describedby="username-label">
+
+          <a href="#" id="generateUsername">generate</a>
+          <div class="input-group mb-3">
+            
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="username-label">@</span>
+            </div>
+            <input required="true" id="input-username" type="text" class="form-control" placeholder="username" aria-label="username-placeholder" aria-describedby="username-label">
+
+
+          </div>
+
+        
 
 
         </div>
 
 
-      </div>
-
-
-      <div class="modal-footer">
-        <button id="connect-ws-btn" type="button" class="btn btn-primary">connect</button>
-      </div>
+        <div class="modal-footer">
+          <button id="connect-ws-btn" type="submit" class="btn btn-primary">connect</button>
+        </div>
+  
+      </form>
+  
     </div>
+
   </div>
+
 </div>
 <!-- connect modal -->
 
@@ -105,26 +113,8 @@
         <!-- <input id="username" type="text" class="form-control" placeholder="Username"> -->
 
         <div id="user-list">
-          <!-- <div class="list-group">
-            
-          </div> -->
           
           <div id="user-list-body">
-
-              <!--
-              <a href="#" class="list-group-item">
-                  <div class="media">
-                      <div class="pull-left">
-                          <img class="img-circle" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="...">
-                      </div>
-                      <div class="media-body">
-                          <p class="media-heading">John Wayne</p>
-                          <small>Software Engineer</small>
-                      </div>
-                  </div>
-              </a> -->
-
-
               
           </div>
 

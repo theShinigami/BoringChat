@@ -145,14 +145,23 @@ $(document).ready(function() {
     // inputs
     $wsURL = $('#ws-url');
 
+    // forms 
+    $wsConnectForm = $("#ws-connect-form")
 
-    // ws connect handle click
-    $connectWSBtn.click( function() {
+
+    // form submit hadnle
+    $wsConnectForm.submit( function(event) {
 
         // replace with empty if it starts with ws://
         $url = "ws://" + $wsURL.val().replace( "ws://", '' );
 
+        // connect to ws
         connectWS( $url );
+
+        // close the modal
+        $("#connectModal").modal("toggle");
+
+        event.preventDefault();
 
     });
 

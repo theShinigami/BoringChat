@@ -108,6 +108,10 @@ h3 {
     border-radius: 4px;
 }
 
+#user-list a {
+    text-decoration: none;
+}
+
 .list-group {
     margin-bottom: 0;
 }
