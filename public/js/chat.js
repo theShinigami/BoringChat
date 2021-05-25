@@ -1,10 +1,5 @@
-// TODO: Don't let an agent send until there is a customer
-// TODO: Let users disconnect
+// chat.js
 
-/* Processing statement for eslint. Please ignore, but leave in place: */
-/* global document window console localStorage getRole ChatConnection */
-
-// Fill the vertical space with the conversation area.
 const handleWindowResize = function() {
     const outerMargin = $('#upper').height() + $('#sendMessageDetails').height() + 60;
     const height = $(window).outerHeight() - outerMargin;
