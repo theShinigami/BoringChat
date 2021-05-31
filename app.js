@@ -40,7 +40,7 @@ app.use( "/user", userRoute );
 // start socket
 io.on( "connection", (socket) => {
 
-    console.log( "connected!" );
+    console.log( "A user connected!", socket.conn.id );
 
 });
 

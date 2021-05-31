@@ -57,7 +57,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="username-label">@</span>
             </div>
-            <input required="true" id="input-username" type="text" class="form-control" placeholder="username" aria-label="username-placeholder" aria-describedby="username-label">
+            <input required="true" id="ws-username" type="text" class="form-control" placeholder="username" aria-label="username-placeholder" aria-describedby="username-label">
 
 
           </div>
@@ -96,6 +96,10 @@
             <div id="loading_spinner" style="display: none">
                 <span>connecting...</span>
                 <div class="spinner-border spinner-border-sm text-primary" role="status"></div> 
+            </div>
+
+            <div id="disconnect_chat" style="display: none">
+              (<span id="usr_name">black</span>) <a href="#" id="a-disconnect">disconnect</a>
             </div>
 
             <div id="connect_btn">
@@ -162,7 +166,6 @@
   <script src="js/chat.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-
 
 
   </script>
