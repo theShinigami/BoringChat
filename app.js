@@ -13,6 +13,8 @@ const http = require('http');
 // socket
 const { Server } = require("socket.io");
 
+// utils
+const { User } = require("./src/utils/User");
 
 // routes
 const userRoute = require( "./src/routes/user.route" );
@@ -36,13 +38,64 @@ app.use( express.static( "public" ) )
 app.use( "/user", userRoute );
 
 
+// user
+let users = new User();
 
-// start socket
+
+// on socket connect[]
 io.on( "connection", (socket) => {
 
-    console.log( "A user connected!", socket.conn.id );
+    let client_id = socket.client.nsps.values().next().value.id;
+
+    console.log( "User connected!", client_id );
+
+
+    // when user disconnects
+    socket.on( "disconnect", function() {
+
+        console.log( "user has been disconnected!: ", client_id);
+        // console.log(socket.leave());
+
+        // annonce a user has been disconnected
+        let user = { 
+            "id": client_id, 
+            "username": users.idToUsername( client_id ), 
+            "room": users.idToRoom( client_id ) };
+
+        socket.broadcast.to( users.idToRoom( client_id ) ).emit( "userDisconnected", user );
+        
+        // remove user from users list
+        users.removeUser( client_id );
+
+    });
+
+
+
+    // join room
+    socket.on('room', function(room) {
+       
+        socket.join( room );
+
+        // save to users
+        let user = users.addNewUser( client_id, socket.handshake.query.username, room );
+
+        // annonce a new user has been connect
+        socket.broadcast.to( room ).emit( "newUserJoined", user );
+
+        // display all client in 'room'
+        console.log( io.sockets.adapter.rooms );
+
+    });
+
+
+    // io.sockets.in("black").emit('message', 'what is going on, party people?');
+
+
+
 
 });
+
+
 
 
 // start express

@@ -141,17 +141,33 @@ const getURLFromLocalStorage = function() {
 
 };
 
-// connect to ws server
-const connectWS = function( url, username ) {
+const saveRoom = function( room ) {
 
-    const $totalReconnectAttempt = 3;
+    save2LocalStorage( "room", room );
+
+};
+
+
+const getRoomFromLocalStorage = function() {
+
+    return getFromLocalStorage( "room" );
+
+};
+
+// connect to ws server
+const connectWS = function( url, username, room ) {
+
+    const $totalReconnectAttempt = 15;
     var $attemptCount = 0;
 
     changeToConnecting();
 
     $socket = io( url, {
         reconnectionDelayMax: 1000,
-        reconnectionAttempts: $totalReconnectAttempt
+        reconnectionAttempts: $totalReconnectAttempt,
+        query: {
+            "username": username
+        }
     });
 
     // when connection error encounters
@@ -183,8 +199,14 @@ const connectWS = function( url, username ) {
         // save ws id
         saveWSID( $socket.id );
 
+        // save the room
+        saveRoom( room );
+        
         // update username at the status 
         updateUsernameToStatus( username );
+
+        // join
+        $socket.emit( "room", room );
 
     });
 
@@ -204,6 +226,32 @@ const connectWS = function( url, username ) {
     // when socket connection fails
     $socket.on('reconnect_failed', () => {
         console.log('reconnect_failed Failed');
+    });
+
+
+    // on incoming message
+    $socket.on('message', function( data ) {
+    
+        console.log('Incoming message:', data);
+    
+    });
+
+    // on new user joined the room
+    $socket.on( 'newUserJoined', function( data ) {
+
+        console.log( "new user: ", data );
+
+        addUserToListBody( `${data.username}`, "message..." );
+
+    });
+
+    // on user disconnects
+    $socket.on( 'userDisconnected', function( data ) {
+        
+        console.log( "user disconnected: ", data );
+
+        removeUserFromList( `${data.username}` );
+
     });
 
 
@@ -332,6 +380,7 @@ $(document).ready(function() {
     // inputs
     $wsURL = $('#ws-url');
     $wsUsername = $("#ws-username");
+    $wsRoom = $("#ws-room");
 
     // forms 
     $wsConnectForm = $("#ws-connect-form")
@@ -345,9 +394,10 @@ $(document).ready(function() {
         // replace with empty if it starts with ws://
         $url = "ws://" + $wsURL.val().replace( "ws://", '' );
         $username = $wsUsername.val();
+        $room = $wsRoom.val();
 
         // connect to ws
-        connectWS( $url, $username );
+        connectWS( $url, $username, $room );
 
         // close the modal
         $("#connectModal").modal("toggle");
@@ -369,10 +419,6 @@ $(document).ready(function() {
 
     });
 
-
-    
-
-    addUserToListBody( 'myUsername', "This is just a demo message" );
 
     chatBubbleHandler();
 
