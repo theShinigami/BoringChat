@@ -37,6 +37,8 @@ class User {
 
     idToUsername( id ) { return this.users.filter( (user) => user.id == id )[0].username; }
 
+    getAllClientsInARoom( room, id ) { return this.users.filter( (user) => user.room == room && user.id != id  ); }
+
     getAllUsers() { return this.users; }
     
   

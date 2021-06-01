@@ -85,10 +85,25 @@ io.on( "connection", (socket) => {
         // display all client in 'room'
         console.log( io.sockets.adapter.rooms );
 
+        // annonce all the clients a the 'room'
+        io.emit( "allClientsInRoom", users.getAllClientsInARoom( room, client_id ) );
+
     });
 
+    // when client is typing
+    socket.on('typing', function( data ) {
 
-    // io.sockets.in("black").emit('message', 'what is going on, party people?');
+        socket.broadcast.to( users.idToRoom( client_id ) ).emit( "typing", { id: client_id, room: data.room } );
+
+    });
+
+    // when new message arrives
+    socket.on( "message", function( data ) {
+
+        socket.broadcast.to( users.idToRoom( client_id ) ).emit( "message", { id: client_id, message: data.message } );
+
+    });
+
 
 
 

@@ -4,6 +4,11 @@
 // socket
 var $socket;
 
+// chat bubble
+var $chatWindow;
+
+// is thinking
+var $isThinking = false;
 
 const handleWindowResize = function() {
     const outerMargin = $('#upper').height() + $('#sendMessageDetails').height() + 60;
@@ -254,6 +259,54 @@ const connectWS = function( url, username, room ) {
 
     });
 
+    // fetchs all connect client in the room
+    $socket.on( 'allClientsInRoom', function( data ) {
+
+        if ( data.length > 0 ) {
+            
+            data.forEach(clientInRoom => {
+                
+                if ( $socket.id != clientInRoom.id ) addUserToListBody( `${clientInRoom.username}`, "message..." );
+
+            });
+
+        } else {
+
+            console.log( "No clients in the room." );
+
+        }
+
+    });
+
+    // on client typing
+    $socket.on( 'typing', function( data ) {
+        
+        if ( !$isThinking ) {
+
+            // set the bubble to thinking
+            $chatWindow.think();
+
+            // change thinking status
+            $isThinking = true;
+
+            // set thinking to 4 seconds
+            setTimeout(function() { 
+                $isThinking = false;
+                $chatWindow.stop(); 
+            }, 4000);
+
+
+        }
+
+    });
+
+    // on new message
+    $socket.on( 'message', function( data ) {
+
+        getReply( data.message );
+
+    });
+
 
  
 }
@@ -285,7 +338,7 @@ const addUserToListBody = function( username, message ) {
                     <span class="initials">${username[0].toUpperCase()}</span>
                 </div>
                 <div class="media-body">
-                    <p class="media-heading">${username}</p>
+                    <p class="media-heading">${username.split('_')[0]}</p>
                     <small>${message}</p>
                 </div>
             </div>
@@ -309,14 +362,16 @@ const removeUserFromList = function( username ) {
 const chatBubbleHandler = function() {
 
     // initialize by constructing a named function...
-    var $chatWindow = new Bubbles(
+    $chatWindow = new Bubbles(
 
         document.getElementById("chat"), // ...passing HTML container element...
         "$chatWindow", // ...and name of the function as a parameter
         {
             inputCallbackFn: function (chatObject) {
 
-            console.log( chatObject );
+            if ( $socket !== undefined && $socket.connected )
+                $socket.emit( "message", { "message": chatObject.input, "id": $socket.id } );
+
 
             }
         }
@@ -340,6 +395,21 @@ const chatBubbleHandler = function() {
     );
 
 }
+
+const getReply = function( msg ) {
+
+    $chatWindow.talk(
+        {
+        ice: {
+
+            says: [ msg ]
+        }, 
+
+        }
+    );
+
+}
+
 
 // generate username handler
 const generateUsernameHandler = function() {
@@ -418,6 +488,23 @@ $(document).ready(function() {
         if ( $socket.connected ) $socket.close();
 
     });
+
+
+    // on char input 
+    $sendMessage.on( "input", function(e) {
+        
+        // on input change send typing event
+        if ( $socket !== undefined && $socket.connected ) $socket.emit( "typing", { id: $socket.id } );
+    });
+
+
+    // on keypress event
+    // $sendMessage.keypress(function( event ) {
+
+    //     if ( $socket !== undefined && $socket.connected )
+    //         if ( event.keyCode == 13 ) $socket.emit( "message", { "message": $sendMessage.val(), "id": $socket.id } );
+
+    // });
 
 
     chatBubbleHandler();
